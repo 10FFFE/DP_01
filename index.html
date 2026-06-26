@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Билайн х Движение Первых</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#0a0a0f;color:#fff;overflow:hidden;height:100vh;width:100vw}
+:root{--y:#FFD600;--o:#FF6B00;--p:#8B5CF6;--t:#00C9A7;--pk:#FF4F8B;--b:#3B82F6;--l:#84CC16}
+
+.bg-anim{position:fixed;inset:0;z-index:0;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(120px);opacity:.14;animation:fo 16s ease-in-out infinite}
+.o1{width:600px;height:600px;background:var(--y);top:-15%;left:-10%}
+.o2{width:500px;height:500px;background:var(--o);bottom:-15%;right:-10%;animation-delay:-5s}
+.o3{width:350px;height:350px;background:var(--p);top:35%;left:55%;animation-delay:-10s}
+@keyframes fo{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-30px) scale(1.05)}66%{transform:translate(-25px,25px) scale(.95)}}
+
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(255,214,0,.01) 1px,transparent 1px),linear-gradient(90deg,rgba(255,214,0,.01) 1px,transparent 1px);background-size:60px 60px}
+.ptcl{position:fixed;inset:0;z-index:0;pointer-events:none}
+.dot-p{position:absolute;border-radius:50%}
+.bee-stripe{position:fixed;top:0;left:0;right:0;height:3px;z-index:50;background:linear-gradient(90deg,var(--y) 0%,var(--o) 25%,var(--p) 50%,var(--t) 75%,var(--pk) 100%)}
+
+.sw{position:relative;z-index:1;width:100%;height:100vh}
+.sl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 40px 110px}
+
+.nav{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.05);backdrop-filter:blur(24px);padding:12px 28px;border-radius:50px;border:1px solid rgba(255,255,255,.06)}
+.nb{background:rgba(255,214,0,.1);border:1px solid rgba(255,214,0,.2);color:var(--y);width:42px;height:42px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.nb:hover{background:rgba(255,214,0,.2);transform:scale(1.1)}
+.nd{display:flex;gap:8px}
+.ndot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.12);cursor:pointer;transition:all .4s}
+.ndot.on{background:var(--y);width:30px;border-radius:10px;box-shadow:0 0 18px rgba(255,214,0,.4)}
+.sc{color:rgba(255,255,255,.35);font-size:13px;font-weight:600;min-width:36px;text-align:center}
+
+.t2{font-size:clamp(24px,3.5vw,40px);font-weight:800;margin-bottom:8px;text-align:center;letter-spacing:-1px}
+.sub{font-size:clamp(14px,1.8vw,18px);color:rgba(255,255,255,.4);text-align:center;max-width:560px;line-height:1.6;font-weight:300;margin-bottom:36px}
+.sub b{color:rgba(255,255,255,.65);font-weight:600}
+
+/* === SLIDE 1 — HERO === */
+.hero-top{display:flex;align-items:center;gap:16px;margin-bottom:40px}
+.hero-bee{font-size:clamp(32px,5vw,56px);font-weight:900;color:var(--y);letter-spacing:-2px}
+.hero-cross{font-size:clamp(22px,3vw,38px);font-weight:200;color:rgba(255,255,255,.18)}
+.hero-dvz{font-size:clamp(18px,2.8vw,34px);font-weight:700;color:rgba(255,255,255,.85);letter-spacing:-1px}
+
+.hero-title{font-size:clamp(34px,6vw,82px);font-weight:900;text-align:center;line-height:1.05;margin-bottom:20px;letter-spacing:-2px}
+.hero-gt{background:linear-gradient(135deg,var(--y),var(--o));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-sub{font-size:clamp(15px,1.7vw,19px);color:rgba(255,255,255,.4);text-align:center;max-width:480px;line-height:1.6;font-weight:300;margin-bottom:44px}
+.hero-sub b{color:var(--y);font-weight:600}
+
+.hero-row{display:flex;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center}
+.hero-card{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:18px 26px;transition:all .3s}
+.hero-card:hover{background:rgba(255,255,255,.07);transform:translateY(-2px);border-color:rgba(255,214,0,.12)}
+.hc-icon{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.hc1 .hc-icon{background:rgba(255,214,0,.12)}
+.hc2 .hc-icon{background:rgba(0,201,167,.12)}
+.hc3 .hc-icon{background:rgba(139,92,246,.12)}
+.hc-val{font-size:22px;font-weight:800}
+.hc1 .hc-val{color:var(--y)}
+.hc2 .hc-val{color:var(--t)}
+.hc3 .hc-val{color:var(--p)}
+.hc-label{font-size:12px;color:rgba(255,255,255,.35);margin-top:2px}
+
+.hero-price-box{margin-top:36px;text-align:center;background:rgba(255,214,0,.06);border:1px solid rgba(255,214,0,.15);border-radius:18px;padding:20px 40px}
+.hpb-main{font-size:clamp(22px,3vw,34px);font-weight:800;background:linear-gradient(135deg,var(--y),var(--o));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hpb-sub{font-size:13px;color:rgba(255,255,255,.25);margin-top:6px}
+.hpb-sub b{color:var(--y);font-weight:600}
+
+/* === AUDIENCE SLIDES === */
+.aud-label{display:inline-flex;align-items:center;gap:10px;padding:8px 20px;border-radius:50px;font-size:13px;font-weight:600;letter-spacing:.5px;margin-bottom:12px;text-transform:uppercase}
+.kids .aud-label{background:rgba(255,214,0,.12);color:var(--y);border:1px solid rgba(255,214,0,.25)}
+.youth .aud-label{background:rgba(0,201,167,.12);color:var(--t);border:1px solid rgba(0,201,167,.25)}
+.parents .aud-label{background:rgba(139,92,246,.12);color:var(--p);border:1px solid rgba(139,92,246,.25)}
+
+.aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:800px;width:100%}
+.ac{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 18px;transition:all .3s}
+.ac:hover{background:rgba(255,255,255,.06);transform:translateY(-2px)}
+.ai{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.at{font-size:13px;font-weight:500;line-height:1.35;display:flex;flex-direction:column;justify-content:center;min-height:42px}
+.at small{display:block;font-size:11px;color:rgba(255,255,255,.35);font-weight:400;margin-top:2px}
+
+.kids .ac:nth-child(1) .ai{background:rgba(255,214,0,.12)}
+.kids .ac:nth-child(2) .ai{background:rgba(255,107,0,.12)}
+.kids .ac:nth-child(3) .ai{background:rgba(255,118,117,.12)}
+.kids .ac:nth-child(4) .ai{background:rgba(253,121,168,.12)}
+.kids .ac:nth-child(5) .ai{background:rgba(253,203,110,.12)}
+.kids .ac:hover{border-color:rgba(255,214,0,.12)}
+
+.youth .ac:nth-child(1) .ai{background:rgba(0,201,167,.12)}
+.youth .ac:nth-child(2) .ai{background:rgba(139,92,246,.12)}
+.youth .ac:nth-child(3) .ai{background:rgba(255,214,0,.12)}
+.youth .ac:nth-child(4) .ai{background:rgba(59,130,246,.12)}
+.youth .ac:nth-child(5) .ai{background:rgba(132,204,22,.12)}
+.youth .ac:hover{border-color:rgba(0,201,167,.12)}
+
+.parents .ac:nth-child(1) .ai{background:rgba(139,92,246,.12)}
+.parents .ac:nth-child(2) .ai{background:rgba(59,130,246,.12)}
+.parents .ac:nth-child(3) .ai{background:rgba(255,79,139,.12)}
+.parents .ac:nth-child(4) .ai{background:rgba(255,214,0,.12)}
+.parents .ac:nth-child(5) .ai{background:rgba(0,201,167,.12)}
+.parents .ac:nth-child(6) .ai{background:rgba(255,118,117,.12)}
+.parents .ac:nth-child(7) .ai{background:rgba(162,155,254,.12)}
+.parents .ac:nth-child(8) .ai{background:rgba(255,107,0,.12)}
+.parents .ac:nth-child(9) .ai{background:rgba(132,204,22,.12)}
+.parents .ac:hover{border-color:rgba(139,92,246,.12)}
+
+.ac-rabbit{background:linear-gradient(135deg,rgba(255,214,0,.06),rgba(255,107,0,.06))!important;border-color:rgba(255,214,0,.18)!important}
+.ac-rabbit:hover{background:linear-gradient(135deg,rgba(255,214,0,.12),rgba(255,107,0,.12))!important;transform:translateY(-3px) scale(1.02);box-shadow:0 8px 24px rgba(255,214,0,.1)}
+.ai-rabbit{background:rgba(255,214,0,.15)!important;font-size:24px;animation:rb 1.5s ease-in-out infinite}
+@keyframes rb{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.aud-price{margin-top:24px;text-align:center}
+.apr{display:flex;align-items:baseline;gap:8px;justify-content:center}
+.apv{font-size:28px;font-weight:800;background:linear-gradient(135deg,var(--y),var(--o));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.app{font-size:14px;color:rgba(255,255,255,.3)}
+.apn{font-size:12px;color:rgba(255,255,255,.22);margin-top:4px}
+.apn b{color:var(--y);font-weight:600}
+
+.cta{margin-top:20px;padding:14px 44px;background:linear-gradient(135deg,var(--y),var(--o));border:none;border-radius:14px;color:#000;font-size:16px;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 8px 30px rgba(255,214,0,.2)}
+.cta:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 12px 40px rgba(255,214,0,.35)}
+
+@media(max-width:768px){.sl{padding:40px 20px 100px}.aud-grid{grid-template-columns:1fr}.hero-row{flex-direction:column;align-items:center}.hero-top{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+<div class="bee-stripe"></div>
+<div class="bg-anim"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<div class="grid-bg"></div>
+<div class="ptcl" id="ptcl"></div>
+
+<div class="sw">
+
+<!-- ============ SLIDE 1 ============ -->
+<div class="sl" id="s0">
+<div class="hero-top ani">
+<div class="hero-bee">билайн</div>
+<div class="hero-cross">×</div>
+<div class="hero-dvz">Движение Первых</div>
+</div>
+<h1 class="hero-title ani"><span class="hero-gt"> Особенная <br> подписка  для Первых</span> </h1>
+<p class="hero-sub ani">Предложение <b>только</b> для участников движения</p>
+<div class="hero-row ani">
+<div class="hero-card hc1">
+<div class="hc-icon">🌐</div>
+<div><div class="hc-val">∞</div><div class="hc-label">Интернет</div></div>
+</div>
+<div class="hero-card hc2">
+<div class="hc-icon">📞</div>
+<div><div class="hc-val">700</div><div class="hc-label">Минут</div></div>
+</div>
+<div class="hero-card hc2">
+<div class="hc-icon">💬</div>
+<div><div class="hc-val">400</div><div class="hc-label">SMS</div></div>
+</div>
+<div class="hero-card hc3">
+<div class="hc-icon">🤖</div>
+<div><div class="hc-val">300</div><div class="hc-label">AI-токенов</div></div>
+</div>
+</div>
+<div class="hero-price-box ani">
+<div class="hpb-main">700 ₽/мес <s>1240 ₽/мес</s></div>
+<div class="hpb-sub">первые 6 мес</div>
+</div>
+</div>
+
+<!-- ============ SLIDE 2 — ДЕТЯМ ============ -->
+<div class="sl kids" id="s1">
+<div class="aud-label ani">👦 Детям</div>
+<h2 class="t2 ani">Безопасность и забота</h2>
+<p class="sub ani">Мир без угроз — <b>защита, контроль и комфорт</b> для младших</p>
+<div class="aud-grid ani">
+<div class="ac"><div class="ai">🛡️</div><div class="at">Встроенная защита<small>От мошенников и интернет-угроз</small></div></div>
+<div class="ac"><div class="ai">🔒</div><div class="at">Доступ к сайтам 18+ закрыт<small>Автоматическая блокировка</small></div></div>
+<div class="ac"><div class="ai">🚫</div><div class="at">Мобильная коммерция ограничена<small>Никаких случайных подписок</small></div></div>
+<div class="ac"><div class="ai">🚨</div><div class="at">Уведомления о мошенниках<small>Родитель узнает первым</small></div></div>
+</div>
+<div class="aud-price ani">
+
+</div>
+</div>
+
+<!-- ============ SLIDE 3 — МОЛОДЁЖИ ============ -->
+<div class="sl youth" id="s2">
+<div class="aud-label ani">🚀 Молодёжи</div>
+<h2 class="t2 ani">Развитие и творчество</h2>
+<p class="sub ani">Инструменты для <b>учёбы, саморазвития и новых навыков</b></p>
+<div class="aud-grid ani">
+<div class="ac"><div class="ai">🤖</div><div class="at">300 AI-токенов<small>Для запросов в нейросети</small></div></div>
+<div class="ac"><div class="ai">📚</div><div class="at">Библиотека промптов<small>Для учёбы и творческих задач</small></div></div>
+<div class="ac"><div class="ai">🌐</div><div class="at">Безлимитный интернет<small>Учись, смотри, общайся</small></div></div>
+<div class="ac"><div class="ai">📞</div><div class="at">400 минут + 400 SMS<small>Звонки и сообщения по России</small></div></div>
+<div class="ac"><div class="ai">🎨</div><div class="at">Возможности для творчества<small>Раскрывай свой потенциал</small></div></div>
+</div>
+<div class="aud-price ani">
+
+</div>
+</div>
+
+<!-- ============ SLIDE 4 — РОДИТЕЛЯМ ============ -->
+<div class="sl parents" id="s3">
+<div class="aud-label ani">👨‍👩‍👧 Родителям</div>
+<h2 class="t2 ani">Забота о всех близких</h2>
+<p class="sub ani">Полный <b>контроль и защита</b> для вашей семьи</p>
+<div class="aud-grid ani">
+<div class="ac"><div class="ai">🔄</div><div class="at">Делитесь своим тарифом</div></div>
+<div class="ac"><div class="ai">⏸️</div><div class="at">Ставьте интернет на паузу<small>Для отдыха и учёбы</small></div></div>
+<div class="ac"><div class="ai">📏</div><div class="at">Ограничивайте размер<small>Того, чем делитесь</small></div></div>
+<div class="ac"><div class="ai">💰</div><div class="at">Присматривайте за балансом<small>Близких</small></div></div>
+<div class="ac"><div class="ai">💳</div><div class="at">Оплачивайте их тариф<small>Со своего счёта</small></div></div>
+<div class="ac"><div class="ai">📍</div><div class="at">Смотрите, где подопечный<small>На карте</small></div></div>
+<div class="ac"><div class="ai">🔒</div><div class="at">Ограничивайте доступ<small>К сайтам 18+</small></div></div>
+<div class="ac"><div class="ai">🚨</div><div class="at">Уведомления об атаке<small>Мошенников</small></div></div>
+<div class="ac"><div class="ai">🚫</div><div class="at">Ограничивайте мобильную коммерцию<small>И запретите ненужные подписки</small></div></div>
+</div>
+</div>
+
+</div>
+
+<div class="nav">
+<button class="nb" id="pb">←</button>
+<div class="nd">
+<div class="ndot on" data-d="0"></div>
+<div class="ndot" data-d="1"></div>
+<div class="ndot" data-d="2"></div>
+<div class="ndot" data-d="3"></div>
+</div>
+<div class="sc"><span id="cn">1</span>/4</div>
+<button class="nb" id="nb2">→</button>
+</div>
+
+<script>
+const ptcl=document.getElementById('ptcl');
+for(let i=0;i<25;i++){const d=document.createElement('div');d.className='dot-p';d.style.left=Math.random()*100+'%';d.style.top=Math.random()*100+'%';d.style.opacity=Math.random()*.2+.08;const sz=(Math.random()*3+1)+'px';d.style.width=sz;d.style.height=sz;d.style.background=Math.random()>.5?'rgba(255,214,0,.3)':'rgba(255,107,0,.2)';ptcl.appendChild(d);gsap.to(d,{y:-100-Math.random()*160,x:(Math.random()-.5)*80,opacity:0,duration:5+Math.random()*5,repeat:-1,delay:Math.random()*6,ease:'none'})}
+
+const slides=document.querySelectorAll('.sl'),dots=document.querySelectorAll('.ndot'),cn=document.getElementById('cn');
+let cur=0,busy=false;
+
+slides.forEach(s=>gsap.set(s,{autoAlpha:0}));
+gsap.set('#s0',{autoAlpha:1});
+document.querySelectorAll('.ani').forEach(el=>gsap.set(el,{opacity:0,y:25}));
+
+function go(idx){
+if(busy||idx===cur||idx<0||idx>=slides.length)return;
+busy=true;
+const dir=idx>cur?1:-1;
+gsap.to(slides[cur],{x:-dir*60,autoAlpha:0,duration:.4,ease:'power3.inOut',onComplete(){gsap.set(slides[cur],{x:0})}});
+const anis=slides[idx].querySelectorAll('.ani');
+gsap.set(anis,{opacity:0,y:25});
+gsap.fromTo(slides[idx],{x:dir*60,autoAlpha:0},{x:0,autoAlpha:1,duration:.5,ease:'power3.out',onComplete(){busy=false;anim(idx)}});
+dots.forEach(d=>d.classList.remove('on'));dots[idx].classList.add('on');
+cur=idx;cn.textContent=idx+1;
+}
+
+function anim(idx){gsap.to(slides[idx].querySelectorAll('.ani'),{opacity:1,y:0,duration:.55,stagger:.07,ease:'power3.out',overwrite:true})}
+
+document.getElementById('nb2').onclick=()=>go(cur+1);
+document.getElementById('pb').onclick=()=>go(cur-1);
+dots.forEach(d=>d.onclick=()=>go(+d.dataset.d));
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(cur+1)}if(e.key==='ArrowLeft')go(cur-1)});
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{const diff=e.changedTouches[0].clientX-tx;if(Math.abs(diff)>50)diff<0?go(cur+1):go(cur-1)});
+setTimeout(()=>anim(0),100);
+</script>
+</body>
+</html>
